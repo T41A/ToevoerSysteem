@@ -1,18 +1,31 @@
 #include "Pump.h"
 
 Pump::Pump(int pressure, PressureSensor sensor)
-:airPressure(pressure), sensor(sensor)
+:airPressure(pressure), sensor(sensor), (pin, pin)
 {}
 
 int Pump::Compare()
 {
   int sensorValue = sensor->GetPressure();
-  int difference = airPressure - sensorValue;
-  return difference; 
+  return sensorvalue; 
 }
 
 void Pump::KeepPressure()
 {
-  int difference = Compare();
-  
+  if (!enabled)
+  {
+    digitalWrite(pin, LOW);
+  }
+  else
+  {
+    int pressure = Compare();
+    if (pressure > airPressure)
+    {
+    	digitalWrite(pin, LOW);
+    }
+    else if (pressure < airPressure)
+    {
+    	digitalWrite(pin, HIGH);
+    }
+  }
 }

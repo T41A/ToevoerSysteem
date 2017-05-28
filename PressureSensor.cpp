@@ -4,15 +4,9 @@ PressureSensor::PressureSensor(int Pin)
 :pin(Pin)
 {}
 
-bool PressureSensor::Calibrate()
-{
-  //what is the best way to calibrate?
-    return false;
-}
-
 int PressureSensor::GetPressure()
 {
-  int pressureValue = analogRead(pin); 
-  //evt calculate to a more usable value
+  int measuredValue = analogRead(pin); 
+  int pressureValue = map(measuredValue, 0, 921, 0, 25000); //calculated to Pa
   return pressureValue;
 }

@@ -7,7 +7,6 @@ private:
   int pin;
 public:
 	PressureSensor(int Pin);
-	bool Calibrate();
 	int GetPressure();
 };
 
