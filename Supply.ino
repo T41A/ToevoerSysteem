@@ -1,5 +1,5 @@
 #include "Valve.h"
-#include "Pump"
+#include "Pump.h"
 #include "iCommunicatie.hpp"
 
 
@@ -7,36 +7,36 @@ int amountOfDrinks = 2;
 int mixWeight = 0;
 
 Valve valves[amountOfDrinks];
-int neededLiquidsPerBottle[amountOfDrinks] = {0, 0}; //array for all bottles? 
+int neededLiquidsPerBottle[amountOfDrinks] = {0, 0}; //array for all bottles?
 
-pump pump;
+Pump pump;
 CANMSG msg;
 iCommunicatie communication;
 
 
-void setup() 
+void setup()
 {
   Serial.begin(9600);
   while(!Serial);
-  pump = new Pump(/*airpressure*/, );
+  pump = new Pump(/*airpressure*/, /*etc*/);
   if(!communication.Init())
   {
-    Serial.println("Setting up CAN failed);
+    Serial.println("Setting up CAN failed");
   }
   communication.SetCallback(GetMessage);
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < amountOfDrinks; i++)
   {
-    valves[i] = new Valve(/*pin*/)
+    valves[i] = new Valve(/*pin*/)  // Maak alvast je pinnen aan zodat ze in de code goed staan en we ze later makkelijk kunnen invullen.
   }
   Serial.println("Setup completed");
 }
 
-void loop() 
+void loop()
 {
   communication.Read(); //for needed amount of liquids
   int neededAmount = 0;
   for (int i = 0; i < amountOfDrinks; i++)
-  { 
+  {
     pump->KeepPressure(true);
     communication.Read(); //for needed amount of liquids
     neededAmount += neededLiquidsPerBottle[i];
@@ -48,17 +48,17 @@ void loop()
     }
     valve[i].Close();
   }
-  for(int i = 0; i < neededLiquidsPerBottle; i++)
+  for(int i = 0; i < amountOfDrinks; i++) 
   {
       neededLiquidsPerBottle[i] = 0;
   }
   mixWeight = 0;
-  //send done 
+  //send done
 }
 
-void GetMessage(CANMSG msg) 
+void GetMessage(CANMSG msg)
 {
-  for (uint8_t i = 0; i < msg.dataLength; i++) 
+  for (uint8_t i = 0; i < msg.dataLength; i++)
   {
     /*Serial.print("Msg: ");
     Serial.print(i);
