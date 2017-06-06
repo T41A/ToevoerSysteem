@@ -64,12 +64,12 @@ void GetMessage(CANMSG msg)
     Serial.print(i);
     Serial.print(" Data: ");
     Serial.println(msg.data[i]);*/
-    if(msg.data[0] == 0x10)
+    if(msg.adrsValue == 0x10)
     {
         neededLiquidsPerBottle[msg.data[1]] = msg.data[2];
     //neededLiquidsPerBottle[1] = //amount of liquids needed for second drink;
     }
-    else if(msg.data[0] = 0x20)
+    else if(msg.adrsValue = 0x20)
     {
       mixWeight = //mix weight;
     }
