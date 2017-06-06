@@ -1,5 +1,6 @@
 #include "Pump.h"
 
+// hier gebeurt iets raars. Je constructor mist de derde parameter en in de tweede lijn snap ik de (pin, pin) niet
 Pump::Pump(int pressure, PressureSensor sensor)
 :airPressure(pressure), sensor(sensor), (pin, pin)
 {}
@@ -7,10 +8,10 @@ Pump::Pump(int pressure, PressureSensor sensor)
 int Pump::Compare()
 {
   int sensorValue = sensor->GetPressure();
-  return sensorvalue; 
+  return sensorvalue;
 }
 
-void Pump::KeepPressure()
+void Pump::KeepPressure() // parameter vergeten
 {
   if (!enabled)
   {
