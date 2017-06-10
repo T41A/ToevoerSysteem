@@ -1,9 +1,11 @@
 #include "Pump.h"
 
 // hier gebeurt iets raars. Je constructor mist de derde parameter en in de tweede lijn snap ik de (pin, pin) niet
-Pump::Pump(int pressure, PressureSensor sensor)
-:airPressure(pressure), sensor(sensor), (pin, pin)
-{}
+Pump::Pump(int pressure, int PumpPin, int SensorPin)
+:airPressure(pressure), pin(PumpPin), PressureSensorPin(SensorPin)
+{
+	sensor = new PressureSensor(PressureSensorPin);
+}
 
 int Pump::Compare()
 {

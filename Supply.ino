@@ -3,13 +3,17 @@
 #include "iCommunicatie.hpp"
 
 
+const int pumpPin = 0; //te veranderen naar digitale pin 
+const int pressureSensorPin = 0 // te veranderen naar analoge pin
+
 int amountOfDrinks = 2;
 int mixWeight = 0;
 
 Valve valves[amountOfDrinks];
 int neededLiquidsPerBottle[amountOfDrinks] = {0, 0}; //array for all bottles?
+int airPressure = 0 // nog te veranderen, moet in Pa 
 
-Pump pump;
+Pump* pump;
 CANMSG msg;
 iCommunicatie communication;
 
@@ -18,7 +22,7 @@ void setup()
 {
   Serial.begin(9600);
   while(!Serial);
-  pump = new Pump(/*airpressure*/, /*etc*/);
+  pump = new Pump(airPressure, PumpPin);
   if(!communication.Init())
   {
     Serial.println("Setting up CAN failed");
@@ -26,7 +30,7 @@ void setup()
   communication.SetCallback(GetMessage);
   for (int i = 0; i < amountOfDrinks; i++)
   {
-    valves[i] = new Valve(/*pin*/)  // Maak alvast je pinnen aan zodat ze in de code goed staan en we ze later makkelijk kunnen invullen.
+    valves[i] = new Valve(i) 
   }
   Serial.println("Setup completed");
 }
@@ -54,7 +58,7 @@ void loop()
   }
   mixWeight = 0;
   //send done
-}
+} 
 
 void GetMessage(CANMSG msg)
 {
