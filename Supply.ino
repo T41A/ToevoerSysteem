@@ -57,7 +57,7 @@ void loop()
       neededLiquidsPerBottle[i] = 0;
   }
   mixWeight = 0;
-  //send done
+  SendDoneMessage();
 } 
 
 void GetMessage(CANMSG msg)
@@ -78,4 +78,29 @@ void GetMessage(CANMSG msg)
       mixWeight = //mix weight;
     }
    }
+}
+
+void SendDoneMessage()
+{
+  msg.adrsValue = 0x30;
+  msg.isExtendedAdrs = false;
+  msg.rtr = false;
+  msg.dataLength = 8;
+  msg.data[0] = 0x01;
+  msg.data[1] = 0;
+  msg.data[2] = 0;
+  msg.data[3] = 0;
+  msg.data[4] = 0;
+  msg.data[5] = 0;
+  msg.data[6] = 0;
+  msg.data[7] = 0;
+
+  if (_com.Write(msg)) 
+  {
+    Serial.println("Message Done is written");
+  }
+  else 
+  {
+    Serial.println("Writing went wrong");
+  }
 }
