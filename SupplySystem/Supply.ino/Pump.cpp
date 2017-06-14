@@ -1,6 +1,6 @@
 #include "Pump.h"
+#include <arduino.h>
 
-// hier gebeurt iets raars. Je constructor mist de derde parameter en in de tweede lijn snap ik de (pin, pin) niet
 Pump::Pump(int pressure, int PumpPin, int SensorPin)
 :airPressure(pressure), pin(PumpPin), PressureSensorPin(SensorPin)
 {
@@ -10,14 +10,15 @@ Pump::Pump(int pressure, int PumpPin, int SensorPin)
 int Pump::Compare()
 {
   int sensorValue = sensor->GetPressure();
-  return sensorvalue;
+  return sensorValue;
 }
 
-void Pump::KeepPressure() // parameter vergeten
+void Pump::KeepPressure(bool enabled) 
 {
   if (!enabled)
   {
     digitalWrite(pin, LOW);
+    
   }
   else
   {
@@ -25,10 +26,23 @@ void Pump::KeepPressure() // parameter vergeten
     if (pressure > airPressure)
     {
     	digitalWrite(pin, LOW);
+    // Serial.println("Low");
     }
     else if (pressure < airPressure)
     {
     	digitalWrite(pin, HIGH);
+      //Serial.println("High");
     }
   }
 }
+
+void Pump::SetOn()
+{
+  digitalWrite(pin, HIGH);
+}
+
+void Pump::SetOff()
+{
+  digitalWrite(pin, LOW);
+}
+

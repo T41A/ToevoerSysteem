@@ -1,6 +1,6 @@
 #ifndef PUMP_H_
 #define PUMP_H_
-include "PressureSensor.h"
+#include "PressureSensor.h"
 
 class Pump
 {
@@ -14,6 +14,8 @@ class Pump
 		Pump(int pressure, int PumpPin, int SensorPin);
 		int Compare();
 		void KeepPressure(bool enabled);
+    void SetOn();
+    void SetOff();
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "PressureSensor.h"
+#include <arduino.h>
 
 PressureSensor::PressureSensor(int Pin)
 :pin(Pin)
